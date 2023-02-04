@@ -8,11 +8,11 @@
 	path = test/test_helper/bats-assert
 	url = https://github.com/bats-core/bats-assert.git
 [submodule "git.🐙/cli"]
-	path = git.🐙/cli
+	path = .archive/git.🐙/cli
 	url = https://github.com/cli/cli
 [submodule "python.🐍/DALLE2-pytorch"]
-	path = python.🐍/DALLE2-pytorch
+	path = .archive/python.🐍/DALLE2-pytorch
 	url = https://github.com/lucidrains/DALLE2-pytorch
 [submodule "vscode.🆚/vscode-docs"]
-	path = vscode.🆚/vscode-docs
+	path = .archive/vscode.🆚/vscode-docs
 	url = https://github.com/microsoft/vscode-docs
