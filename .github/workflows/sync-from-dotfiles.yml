@@ -1,0 +1,36 @@
+# .github/workflows/sync-dotfiles.yml
+name: 💤 Nightly Sync Dotfiles
+
+on:
+  schedule:
+    - cron: "0 3 * * *"  # Every night at 3am UTC
+  workflow_dispatch:     # Optional: manual trigger
+
+jobs:
+  sync-template:
+    name: Sync dotfiles -> _b00t_
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout _b00t_
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Add dotfiles upstream
+        run: |
+          git remote add dotfiles https://github.com/elasticdotventures/dotfiles.git
+          git fetch dotfiles
+
+      - name: Rebase dotfiles/main onto current branch
+        run: |
+          git checkout main
+          git rebase dotfiles/main
+        continue-on-error: true  # If rebase conflicts, do nothing for now
+
+      - name: Push changes (if any)
+        run: |
+          git push origin main
+        continue-on-error: true  # Only push if rebase was clean
+
