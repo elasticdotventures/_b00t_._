@@ -15,7 +15,7 @@ jobs:
       - name: Checkout _b00t_
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.WORKFLOW_PAT || secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.WORKFLOW_PAT }}
           fetch-depth: 0
 
       - name: Add dotfiles upstream
@@ -35,13 +35,11 @@ jobs:
           }
 
       - name: Push changes (if any)
-        env:
-          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT || secrets.GITHUB_TOKEN }}
         run: |
           if git diff --quiet HEAD~1 HEAD 2>/dev/null; then
             echo "No changes to push"
           else
             echo "Pushing changes to origin/main"
-            git push https://x-access-token:${GITHUB_TOKEN}@github.com/elasticdotventures/_b00t_.git main
+            git push origin main
           fi
 
