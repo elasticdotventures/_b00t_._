@@ -23,14 +23,23 @@ jobs:
           git remote add dotfiles https://github.com/elasticdotventures/dotfiles.git
           git fetch dotfiles
 
-      - name: Rebase dotfiles/main onto current branch
+      - name: Sync specific files from dotfiles
         run: |
-          git checkout main
-          git rebase dotfiles/main || {
-            echo "Rebase failed, attempting intelligent merge"
-            git rebase --abort
-            ./.github/scripts/opencode-intelligent-merge.sh
-          }
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions Bot"
+          
+          # Copy specific useful files from dotfiles
+          git checkout dotfiles/main -- .gitignore || echo "No .gitignore in dotfiles"
+          git checkout dotfiles/main -- .bashrc || echo "No .bashrc in dotfiles"
+          git checkout dotfiles/main -- .vimrc || echo "No .vimrc in dotfiles"
+          
+          # Only commit if there are changes
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "Sync useful dotfiles updates"
+          else
+            echo "No changes to sync"
+          fi
 
       - name: Push changes (if any)
         run: |
