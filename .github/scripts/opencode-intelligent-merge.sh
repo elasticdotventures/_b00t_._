@@ -3,6 +3,10 @@
 
 set -e
 
+# Configure git identity for the runner
+git config user.email "opencode@promptexecution.com"
+git config user.name "Opencode Bot"
+
 echo "🤖 Starting intelligent merge with opencode..."
 
 # Try standard merge first
