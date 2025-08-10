@@ -27,9 +27,9 @@ jobs:
         run: |
           git checkout main
           git rebase dotfiles/main || {
-            echo "Rebase failed, attempting merge instead"
+            echo "Rebase failed, attempting intelligent merge"
             git rebase --abort
-            git merge dotfiles/main -m "Merge dotfiles updates"
+            ./.github/scripts/opencode-intelligent-merge.sh
           }
 
       - name: Push changes (if any)
