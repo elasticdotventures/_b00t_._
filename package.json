@@ -1,6 +1,1 @@
-{
-  "dependencies": {
-    "@docker/sdk": "^1.0.3",
-    "anycloud": "^0.1.41"
-  }
-}
+{}

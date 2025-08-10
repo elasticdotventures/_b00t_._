@@ -1,6 +1,9 @@
 # tmp
 tmp/
 
+# Deadjoe
+*~
+
 ## Python .gitignore 🐍
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -160,6 +163,7 @@ lib-cov
 coverage
 *.lcov
 
+
 # nyc test coverage
 .nyc_output
 
@@ -253,3 +257,43 @@ dist
 .yarn/install-state.gz
 .pnp.*
 yarn.lock
+agentsea/*
+
+dev-debug.log
+# Environment variables
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+# OS specific
+.DS_Store
+
+# direnv
+.envrc
+.env
+
+# context7
+alembic.ini
+context_portal/*
+**/DEADJOE
+**/~Stashed changes
+**/*~Stashed changes
+**/context_portal
+
+# Task files
+# tasks.json
+# tasks/ 
+.claude/*
+.cursor/*
+.taskmaster/*
+*/.env*
+._b00t_.toml
+*.ignore
+mcp-probe/*
+test_*.json
+mcp-probe/*
+mcp-probe

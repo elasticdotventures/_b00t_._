@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "b00t-mcp": {
+      "args": [
+        "--stdio"
+      ],
+      "command": "./target/debug/b00t-mcp",
+      "env": {},
+      "alwaysAllow": [
+        "b00t_whoami"
+      ]
+    },
+    "github": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "command": "npx"
+    },
+    "taskmaster-ai": {
+      "args": [
+        "-y",
+        "--package=task-master-ai",
+        "task-master-ai"
+      ],
+      "command": "bunx",
+      "env": {}
+    }
+  }
+}
