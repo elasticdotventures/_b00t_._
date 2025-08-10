@@ -23,30 +23,25 @@ jobs:
           git remote add dotfiles https://github.com/elasticdotventures/dotfiles.git
           git fetch dotfiles
 
-      - name: Sync specific files from dotfiles
+      - name: Intelligent merge with dotfiles
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT || secrets.GITHUB_TOKEN }}
         run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions Bot"
-          
-          # Copy specific useful files from dotfiles
-          git checkout dotfiles/main -- .gitignore || echo "No .gitignore in dotfiles"
-          git checkout dotfiles/main -- .bashrc || echo "No .bashrc in dotfiles"
-          git checkout dotfiles/main -- .vimrc || echo "No .vimrc in dotfiles"
-          
-          # Only commit if there are changes
-          if ! git diff --quiet; then
-            git add .
-            git commit -m "Sync useful dotfiles updates"
-          else
-            echo "No changes to sync"
-          fi
+          git checkout main
+          git rebase dotfiles/main || {
+            echo "Rebase failed, attempting intelligent merge"
+            git rebase --abort
+            ./.github/scripts/opencode-intelligent-merge.sh
+          }
 
       - name: Push changes (if any)
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_PAT || secrets.GITHUB_TOKEN }}
         run: |
           if git diff --quiet HEAD~1 HEAD 2>/dev/null; then
             echo "No changes to push"
           else
             echo "Pushing changes to origin/main"
-            git push origin main
+            git push https://x-access-token:${GITHUB_TOKEN}@github.com/elasticdotventures/_b00t_.git main
           fi
 
