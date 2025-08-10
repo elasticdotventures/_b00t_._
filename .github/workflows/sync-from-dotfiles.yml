@@ -26,11 +26,18 @@ jobs:
       - name: Rebase dotfiles/main onto current branch
         run: |
           git checkout main
-          git rebase dotfiles/main
-        continue-on-error: true  # If rebase conflicts, do nothing for now
+          git rebase dotfiles/main || {
+            echo "Rebase failed, attempting merge instead"
+            git rebase --abort
+            git merge dotfiles/main -m "Merge dotfiles updates"
+          }
 
       - name: Push changes (if any)
         run: |
-          git push origin main
-        continue-on-error: true  # Only push if rebase was clean
+          if git diff --quiet HEAD~1 HEAD 2>/dev/null; then
+            echo "No changes to push"
+          else
+            echo "Pushing changes to origin/main"
+            git push origin main
+          fi
 
